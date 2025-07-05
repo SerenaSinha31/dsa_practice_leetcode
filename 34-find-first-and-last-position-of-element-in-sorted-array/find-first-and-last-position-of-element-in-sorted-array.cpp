@@ -1,51 +1,47 @@
-
 class Solution {
 public:
-    vector<int> searchRange(vector<int>& nums, int target) {
+    vector<int> searchRange(const vector<int>& nums, int target) {
         int first = firstOccurrence(nums, target);
-        int last = lastOccurrence(nums, target);
+        int last  = lastOccurrence(nums, target);
         return {first, last};
     }
 
-    // \U0001f539 Function to find the first (leftmost) occurrence
-    int firstOccurrence(vector<int>& nums, int target) {
-        int left = 0, right = nums.size() - 1;
+private:
+    int firstOccurrence(const vector<int>& nums, int target) {
+        int left = 0, right = static_cast<int>(nums.size()) - 1;
         int index = -1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
             if (nums[mid] == target) {
-                index = mid;
-                right = mid - 1; // keep searching on the left
+                index = mid;        // potential answer
+                right = mid - 1;    // look further left
             } else if (nums[mid] < target) {
-                left = mid + 1;
+                left = mid + 1;     // discard left half
             } else {
-                right = mid - 1;
+                right = mid - 1;    // discard right half
             }
         }
-
         return index;
     }
 
-    // \U0001f539 Function to find the last (rightmost) occurrence
-    int lastOccurrence(vector<int>& nums, int target) {
-        int left = 0, right = nums.size() - 1;
+    int lastOccurrence(const vector<int>& nums, int target) {
+        int left = 0, right = static_cast<int>(nums.size()) - 1;
         int index = -1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
             if (nums[mid] == target) {
-                index = mid;
-                left = mid + 1; // keep searching on the right
+                index = mid;        // potential answer
+                left = mid + 1;     // look further right
             } else if (nums[mid] < target) {
-                left = mid + 1;
+                left = mid + 1;     // discard left half
             } else {
-                right = mid - 1;
+                right = mid - 1;    // discard right half
             }
         }
-
         return index;
     }
 };
